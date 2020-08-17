@@ -47,8 +47,8 @@ def EDA(df):
 
 
 def run():
-    image = Image.open('logo.jpg')
-    st.image(image, use_column_width=True, use_column_height=True)
+    #image = Image.open('logo.jpg')
+    #st.image(image, use_column_width=True, use_column_height=True)
     st.title('Instituição de Ensino Superior XY')
     st.subheader('Esse app irá realizar a previsão de rematrículas dos alunos.')
     #st.sidebar.info('Esse app irá realizar a previsão de rematrículas dos alunos.')
@@ -74,7 +74,6 @@ def run():
         cols = st.multiselect("Atributos", predictions.columns.tolist(), default=defaultcols)
         st.dataframe(predictions[cols])
 
-        # inserindo um botão na tela
         if st.checkbox("Salvar resultados"):  
             df_save = predictions[cols]
             csv = df_save.to_csv(encoding='utf-8-sig', index=False)
@@ -82,13 +81,13 @@ def run():
             href = f'<a href="data:file/csv;base64,{b64}" download="results.csv">Download arquivo CSV</a> (clique com o botão direito e Salvar link como &lt;algum_nome&gt;.csv)'
             st.markdown(href, unsafe_allow_html=True)
 
-        #if btn_save:
-        #   predictions[cols].rea 
-
         if st.checkbox("JSON Format"):        
             df_list = pd.DataFrame(predictions[cols].values , columns =  cols)
-            df_list = df_list.to_json(orient='records')
+            df_list = df_list.to_json(orient='records', force_ascii=False)
             st.json(df_list)
+            b64 = base64.b64encode(df_list.encode('utf-8-sig')).decode()  # some strings <-> bytes conversions necessary here
+            href = f'<a href="data:file/json;base64,{b64}" download="results.json">Download arquivo JSON</a> (clique com o botão direito e Salvar link como &lt;algum_nome&gt;.json)'
+            st.markdown(href, unsafe_allow_html=True)
             
 
 
