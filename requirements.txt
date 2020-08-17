@@ -1,2 +1,2 @@
-pycaret==2.0
+pycaret
 streamlit
