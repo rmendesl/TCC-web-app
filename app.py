@@ -47,8 +47,8 @@ def EDA(df):
 
 
 def run():
-    #image = Image.open('logo.jpg')
-    #st.image(image, use_column_width=True, use_column_height=True)
+    image = Image.open('logo.png')
+    st.image(image, use_column_width=True, use_column_height=True)
     st.title('Instituição de Ensino Superior XY')
     st.subheader('Esse app irá realizar a previsão de rematrículas dos alunos.')
     #st.sidebar.info('Esse app irá realizar a previsão de rematrículas dos alunos.')
@@ -62,6 +62,7 @@ def run():
         data = pd.read_excel(file_upload, sheet_name=0)
         df_clean = EDA(data)
        
+        # Realizando as previsões
         predictions = predict_model(estimator=model, data=df_clean)
         predictions['Rematriculado'] = predictions['Label'].apply(lambda x: 'SIM' if x == 1 else 'NÃO' )
 
@@ -89,22 +90,5 @@ def run():
             href = f'<a href="data:file/json;base64,{b64}" download="results.json">Download arquivo JSON</a> (clique com o botão direito e Salvar link como &lt;algum_nome&gt;.json)'
             st.markdown(href, unsafe_allow_html=True)
             
-
-
-        #if st.checkbox("Mostrar métricas"):
-            #acc = accuracy_score(model.y_true.Rematriculado[:,1], predictions['Label'])
-            #auc = roc_auc_score(model.y_true[:, 1], predictions['Score'])
-            #recall = recall_score(model.y_true[:, 1], predictions['Label'])
-            #precision = precision_score(model.y_true[:, 1], predictions['Label'])
-            #f1 = f1_score(model.y_true[:, 1], predictions['Label'])
-
-            #cols   = ['Model', 'Accuracy', 'AUC', 'Recall', 'Prec.', 'F1']
-            #values = ['Random Forest Classifier', acc, auc, recall, precision, f1]
-            #metrics = pd.DataFrame({tup[0]: [tup[1]] for tup in zip(cols, values)})
-            #st.dataframe(metrics)
-
-
-
-
 if __name__ == '__main__':
     run()
