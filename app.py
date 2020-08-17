@@ -47,7 +47,7 @@ def EDA(df):
 
 
 def run():
-    image = Image.open('logo.png')
+    image = Image.open('Logo.png')
     st.image(image, use_column_width=True, use_column_height=True)
     st.title('Instituição de Ensino Superior XY')
     st.subheader('Esse app irá realizar a previsão de rematrículas dos alunos.')
