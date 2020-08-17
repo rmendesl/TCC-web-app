@@ -9,11 +9,13 @@ st.set_option('deprecation.showfileUploaderEncoding', False)
 
 model = load_model('modelrematricula_pycaret')
 
+#Função de previsão
 def predict(model, input_df):
     predictions_df = predict_model(estimator=model, data=input_df)
     predictions_df = predictions_df['Label'][0]
     return predicitons
 
+#Função para mover colunas de um dataframe
 def movecol(df, cols_to_move=[], ref_col='', place='After'):
     cols = df.columns.tolist()
     if place == 'After':
@@ -51,10 +53,6 @@ def run():
     st.image(image, use_column_width=True, use_column_height=True)
     st.title('Instituição de Ensino Superior XY')
     st.subheader('Esse app irá realizar a previsão de rematrículas dos alunos.')
-    #st.sidebar.info('Esse app irá realizar a previsão de rematrículas dos alunos.')
-    
-    #st.sidebar.success('https://www.pycaret.org')
-    #st.sidebar.header('User Input Features')  
 
     file_upload = st.file_uploader("Faça o upload do seu arquivo XLSX para as previsões.", type=["xlsx"])
 
@@ -78,7 +76,7 @@ def run():
         if st.checkbox("Salvar resultados"):  
             df_save = predictions[cols]
             csv = df_save.to_csv(encoding='utf-8-sig', index=False)
-            b64 = base64.b64encode(csv.encode('utf-8-sig')).decode()  # some strings <-> bytes conversions necessary here
+            b64 = base64.b64encode(csv.encode('utf-8-sig')).decode()  
             href = f'<a href="data:file/csv;base64,{b64}" download="results.csv">Download arquivo CSV</a> (clique com o botão direito e Salvar link como &lt;algum_nome&gt;.csv)'
             st.markdown(href, unsafe_allow_html=True)
 
@@ -86,7 +84,7 @@ def run():
             df_list = pd.DataFrame(predictions[cols].values , columns =  cols)
             df_list = df_list.to_json(orient='records', force_ascii=False)
             st.json(df_list)
-            b64 = base64.b64encode(df_list.encode('utf-8-sig')).decode()  # some strings <-> bytes conversions necessary here
+            b64 = base64.b64encode(df_list.encode('utf-8-sig')).decode() 
             href = f'<a href="data:file/json;base64,{b64}" download="results.json">Download arquivo JSON</a> (clique com o botão direito e Salvar link como &lt;algum_nome&gt;.json)'
             st.markdown(href, unsafe_allow_html=True)
             
