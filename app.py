@@ -72,7 +72,7 @@ def run():
         defaultcols = ['COD_MATRICULA', 'Label', 'Score', 'Rematriculado']
 
         # Defindo atributos a partir do multiselect
-        cols = st.multiselect("Atributos", predictions.columns.tolist(), default=defaultcols)
+        cols = st.multiselect("Lista de Atributos", predictions.columns.tolist(), default=defaultcols)
         st.dataframe(predictions[cols])
 
         if st.checkbox("Salvar resultados"):  
